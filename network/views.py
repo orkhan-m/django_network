@@ -10,9 +10,12 @@ from .models import User, Post, Likes, Follow
 
 def index(request):
     return render(request, "network/index.html", {
-        "posts" : Post.objects.all()
+        "posts" : Post.objects.order_by('-timestamp')
     })
 
+def individual(request, id):
+    print(id)
+    pass
 
 """Function to POST the 
 content to the feed"""
@@ -33,12 +36,12 @@ def post(request):
         new_post.save()
 
         return render(request, "network/index.html", {
-            "posts" : Post.objects.all()
+            "posts" : Post.objects.order_by('-timestamp')
         })
 
     if request.method == "GET":
         return render(request, "network/index.html", {
-            "posts" : Post.objects.all()
+            "posts" : Post.objects.order_by('-timestamp')
         })
 
 def login_view(request):
@@ -50,7 +53,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
 
         # get all posts
-        posts = Post.objects.all()
+        posts = Post.objects.order_by('-timestamp')
 
         # Check if authentication successful
         if user is not None:

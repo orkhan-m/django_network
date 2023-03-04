@@ -36,7 +36,7 @@
 
 .individual-post {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
   align-content: flex-start;
   padding: 0.5%;
@@ -54,7 +54,45 @@
 }
 
 .individual-post-content {
-  flex-grow: 8;
+  width: 100%;
+  flex-grow: 15;
   padding: 1%;
   background-color: #f9f5e7;
+  height: 62.5%;
+}
+
+.likes {
+  color: white;
+  font-size: 26px;
+  height: 12%;
+  margin-bottom: 1%;
+  margin-top: 0.5%;
+  padding-left: 2%;
+}
+
+@keyframes example {
+  0% {
+    transform: rotate(30deg);
+  }
+  50% {
+    transform: rotate(-30deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.likes:hover {
+  animation-name: example;
+  animation-duration: 1s;
+}
+
+.like-number {
+  color: black;
+  font-size: 24px;
+  height: 12%;
+  margin-bottom: 1%;
+  margin-top: 0.5%;
+  padding-left: 2%;
+  width: 50%;
 }
