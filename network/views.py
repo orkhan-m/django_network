@@ -3,13 +3,43 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
-from .models import User
+from .models import User, Post, Likes, Follow
 
 
 def index(request):
-    return render(request, "network/index.html")
+    return render(request, "network/index.html", {
+        "posts" : Post.objects.all()
+    })
 
+
+"""Function to POST the 
+content to the feed"""
+@login_required
+def post(request):
+    if request.method == "POST":
+        content = request.POST["input-textarea-name"]
+        currentUser = request.user
+
+        new_post = Post(
+            user = currentUser,
+            post = content
+        )
+
+        print("content")
+        print("currentUser")
+
+        new_post.save()
+
+        return render(request, "network/index.html", {
+            "posts" : Post.objects.all()
+        })
+
+    if request.method == "GET":
+        return render(request, "network/index.html", {
+            "posts" : Post.objects.all()
+        })
 
 def login_view(request):
     if request.method == "POST":
@@ -19,10 +49,16 @@ def login_view(request):
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
 
+        # get all posts
+        posts = Post.objects.all()
+
         # Check if authentication successful
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
+            # return render(request, "network/index.html", {
+            #     "posts" : Post.objects.all() 
+            # })
         else:
             return render(request, "network/login.html", {
                 "message": "Invalid username and/or password."

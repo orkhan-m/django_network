@@ -4,6 +4,57 @@
   margin: 1.5%;
 }
 
-div {
-  background-color: antiquewhite;
+.post-form {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  background-color: #a7727d;
+  border: silver solid 3px;
+}
+
+.input-textarea {
+  background-color: whitesmoke;
+  border: solid 2px silver;
+  margin: 1%;
+  height: 50px;
+  width: 100%;
+}
+
+.btn-publish {
+  margin: 1%;
+  margin-top: 0%;
+  border-radius: 25px;
+  background-color: #ce7777;
+  color: ghostwhite;
+}
+
+.post-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around flex-start;
+}
+
+.individual-post {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  padding: 0.5%;
+  border: solid 1px gainsboro;
+  margin: 1%;
+  height: 250px;
+  width: 30%;
+  background-color: #eddbc7;
+}
+
+.user-and-time {
+  width: 100%;
+  background-color: #f8ead8;
+  padding-left: 0.5%;
+}
+
+.individual-post-content {
+  flex-grow: 8;
+  padding: 1%;
+  background-color: #f9f5e7;
 }

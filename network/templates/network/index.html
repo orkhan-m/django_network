@@ -1,7 +1,32 @@
 {% extends "network/layout.html" %} {% block body %}
 <div class="post">
-  <form>
-    <textarea rows="5" cols="55"> </textarea>
+  <form method="post" action="{% url 'post' %}" class="post-form">
+    {% csrf_token %}
+    <textarea
+      maxlength="5000"
+      class="input-textarea"
+      name="input-textarea-name"
+    >
+    </textarea>
+    <br />
+    <button class="btn-publish" type="submit">Publish</button>
   </form>
 </div>
+
+<hr />
+
+<div class="post-content">
+  {% for post in posts %}
+  <div class="individual-post">
+    <h6 class="user-and-time">Posted by: <strong>{{ post.user }}</strong></h6>
+    <h6 class="user-and-time">
+      Timestamp: <strong>{{ post.timestamp }}</strong>
+    </h6>
+    <div class="individual-post-content">
+      <p>{{ post.post }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
 {% endblock %}
