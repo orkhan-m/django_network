@@ -22,4 +22,3 @@ class Likes(models.Model):
 class Follow(models.Model):
     user_main = models.ForeignKey(User, on_delete=models.CASCADE, related_name="main") #, null=True, blank=True)
     user_follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name="follower") #, null=True, blank=True)
-    follow = models.BooleanField(default=False)

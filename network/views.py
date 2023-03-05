@@ -13,6 +13,13 @@ def index(request):
         "posts" : Post.objects.order_by('-timestamp')
     })
 
+def follow(request, id):
+    currentUser = request.user
+    user_individual = User.objects.get(pk=id)
+    print(currentUser)
+    print(user_individual)
+    return HttpResponseRedirect(reverse("individual/<int:id>"))
+
 def individual(request, id):
     # get the user - owner of the profile
     user_individual = User.objects.get(pk=id)
@@ -42,9 +49,6 @@ def post(request):
             user = currentUser,
             post = content
         )
-
-        print("content")
-        print("currentUser")
 
         new_post.save()
 
