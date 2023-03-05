@@ -14,8 +14,16 @@ def index(request):
     })
 
 def individual(request, id):
-    print(id)
-    pass
+    # get the user
+    user_individual = User.objects.get(pk=id)
+
+    # posts of the selected id profile
+    posts = Post.objects.filter(user=user_individual).order_by('-timestamp')
+
+    return render(request, "network/individual.html", {
+        "posts" : posts
+    })
+    
 
 """Function to POST the 
 content to the feed"""
@@ -59,9 +67,6 @@ def login_view(request):
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
-            # return render(request, "network/index.html", {
-            #     "posts" : Post.objects.all() 
-            # })
         else:
             return render(request, "network/login.html", {
                 "message": "Invalid username and/or password."

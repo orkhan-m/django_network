@@ -1,19 +1,5 @@
 {% extends "network/layout.html" %} {% block body %}
-<div class="post">
-  <form method="post" action="{% url 'post' %}" class="post-form">
-    {% csrf_token %}
-    <textarea
-      maxlength="5000"
-      class="input-textarea"
-      name="input-textarea-name"
-    ></textarea>
-    <br />
-    <button class="btn-publish" type="submit">Publish</button>
-  </form>
-</div>
-
-<hr />
-
+<div class="profile"></div>
 <div class="post-content">
   {% for post in posts %}
   <div class="individual-post">
@@ -38,5 +24,4 @@
   </div>
   {% endfor %}
 </div>
-
 {% endblock %}
