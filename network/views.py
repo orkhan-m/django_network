@@ -14,14 +14,19 @@ def index(request):
     })
 
 def individual(request, id):
-    # get the user
+    # get the user - owner of the profile
     user_individual = User.objects.get(pk=id)
+
+    # get logged in user
+    currentUser = request.user
 
     # posts of the selected id profile
     posts = Post.objects.filter(user=user_individual).order_by('-timestamp')
 
     return render(request, "network/individual.html", {
-        "posts" : posts
+        "posts" : posts,
+        "user_individual" : user_individual,
+        "currentUser" : currentUser
     })
     
 

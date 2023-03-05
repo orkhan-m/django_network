@@ -1,5 +1,12 @@
 {% extends "network/layout.html" %} {% block body %}
-<div class="profile"></div>
+<div class="user-profile">
+  <h1 class="user-profile-name">{{ user_individual }}</h1>
+  <h4 class="user-profile-followers">Followers:</h4>
+  <h4 class="user-profile-following">Following:</h4>
+  {% if user_individual != currentUser %}
+  <button class="follow-btn" type="submit">Follow</button>
+  {% endif %}
+</div>
 <div class="post-content">
   {% for post in posts %}
   <div class="individual-post">
