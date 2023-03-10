@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
     event.preventDefault();
     console.log("SALAM VSEM BRODYAQAM");
   }
+
+  // function to POST request following
+
   // check button
   document.querySelector(".follow-btn").addEventListener("click", check_button);
 });

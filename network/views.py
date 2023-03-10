@@ -14,6 +14,11 @@ def index(request):
     })
 
 def follow(request, id):
+    if request.method != "POST":
+        return HttpResponseRedirect(reverse("individual/<int:id>"))
+    
+    data = json
+
     currentUser = request.user
     user_individual = User.objects.get(pk=id)
     print(currentUser)
@@ -36,13 +41,16 @@ def individual(request, id):
         "currentUser" : currentUser
     })
     
-
 """Function to POST the 
 content to the feed"""
 @login_required
 def post(request):
     if request.method == "POST":
         content = request.POST["input-textarea-name"]
+        # do not publish if completely blank
+        if content.strip() == "":
+            return HttpResponseRedirect(reverse("index"))
+        
         currentUser = request.user
 
         new_post = Post(
