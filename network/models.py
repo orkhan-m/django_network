@@ -22,3 +22,9 @@ class Likes(models.Model):
 class Follow(models.Model):
     user_main = models.ForeignKey(User, on_delete=models.CASCADE, related_name="main") #, null=True, blank=True)
     user_follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name="follower") #, null=True, blank=True)
+
+    class Meta:
+        unique_together = ["user_main", "user_follower"]
+
+    def __str__(self):
+        return f"{self.user_follower} is following {self.user_main}"

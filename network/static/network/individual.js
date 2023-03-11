@@ -1,14 +1,14 @@
-document.addEventListener("DOMContentLoaded", function () {
-  function check_button(event) {
-    event.preventDefault();
-    console.log("SALAM VSEM BRODYAQAM");
-  }
+// document.addEventListener("DOMContentLoaded", function () {
+//   function check_button(event) {
+//     event.preventDefault();
+//     console.log("SALAM VSEM BRODYAQAM");
+//   }
 
-  // function to POST request following
+//   // function to POST request following
 
-  // check button
-  document.querySelector(".follow-btn").addEventListener("click", check_button);
-});
+//   // check button
+//   document.querySelector(".follow-btn").addEventListener("click", check_button);
+// });
 
 // function following() {
 //   fetch(`/individual/${id}`)

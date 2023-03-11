@@ -4,13 +4,20 @@
   <h4 class="user-profile-followers">Followers:</h4>
   <h4 class="user-profile-following">Following:</h4>
   {% if user_individual != currentUser %}
-  <button
-    class="follow-btn"
-    type="submit"
+  <form
+    method="post"
     action="{% url 'follow' id=user_individual.id %}"
+    class="form-follow-btn"
   >
-    Follow
-  </button>
+    {% csrf_token %}
+    <button
+      class="follow-btn {% if button == 'Follow' %}follow-btn-follow{% else %}follow-btn-unfollow{% endif %}"
+      type="submit"
+    >
+      {{ button }}
+    </button>
+  </form>
+
   {% endif %}
 </div>
 <div class="post-content">

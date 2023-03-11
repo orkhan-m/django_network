@@ -13,17 +13,29 @@ def index(request):
         "posts" : Post.objects.order_by('-timestamp')
     })
 
+@login_required
 def follow(request, id):
     if request.method != "POST":
-        return HttpResponseRedirect(reverse("individual/<int:id>"))
+        return HttpResponseRedirect(reverse("individual", args=[id]))
     
-    data = json
-
     currentUser = request.user
     user_individual = User.objects.get(pk=id)
+
     print(currentUser)
     print(user_individual)
-    return HttpResponseRedirect(reverse("individual/<int:id>"))
+
+    if Follow.objects.filter(user_main=user_individual, user_follower=currentUser).exists():
+        to_delete_follow = Follow.objects.get(user_follower=currentUser, user_main=user_individual)
+        to_delete_follow.delete()
+    elif not Follow.objects.filter(user_main=user_individual, user_follower=currentUser).exists():
+        newFollow = Follow(
+            user_main = user_individual,
+            user_follower = currentUser
+        )
+
+        newFollow.save()
+
+    return HttpResponseRedirect(reverse("individual", args=[id]))
 
 def individual(request, id):
     # get the user - owner of the profile
@@ -35,10 +47,16 @@ def individual(request, id):
     # posts of the selected id profile
     posts = Post.objects.filter(user=user_individual).order_by('-timestamp')
 
+    if Follow.objects.filter(user_main=user_individual, user_follower=currentUser).exists():
+        button = "Unfollow"
+    else:
+        button = "Follow"
+
     return render(request, "network/individual.html", {
         "posts" : posts,
         "user_individual" : user_individual,
-        "currentUser" : currentUser
+        "currentUser" : currentUser,
+        "button" : button
     })
     
 """Function to POST the 
@@ -59,15 +77,11 @@ def post(request):
         )
 
         new_post.save()
+    
+        return HttpResponseRedirect(reverse("index"))
 
-        return render(request, "network/index.html", {
-            "posts" : Post.objects.order_by('-timestamp')
-        })
-
-    if request.method == "GET":
-        return render(request, "network/index.html", {
-            "posts" : Post.objects.order_by('-timestamp')
-        })
+    else:
+        return HttpResponseRedirect(reverse("index"))
 
 def login_view(request):
     if request.method == "POST":
