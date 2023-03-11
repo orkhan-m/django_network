@@ -14,6 +14,20 @@ def index(request):
     })
 
 @login_required
+def following_page(request):
+    currentUser = request.user
+
+    # flat=True used when need only one value, e.g. instead of ('list_of_following', 'list_of_users')
+    followed_users = Follow.objects.filter(user_follower=currentUser).values_list('user_main', flat=True)
+
+    # NOTE how to filter by the query set values
+    post_of_following = Post.objects.filter(user__in=followed_users).order_by('-timestamp')
+
+    return render(request, "network/index.html", {
+        "posts" : post_of_following
+    })
+
+@login_required
 def follow(request, id):
     if request.method != "POST":
         return HttpResponseRedirect(reverse("individual", args=[id]))
@@ -52,11 +66,16 @@ def individual(request, id):
     else:
         button = "Follow"
 
+    numberofFollowers = Follow.objects.filter(user_main = user_individual).count()
+    numberofFollowing = Follow.objects.filter(user_follower = user_individual).count()
+
     return render(request, "network/individual.html", {
         "posts" : posts,
         "user_individual" : user_individual,
         "currentUser" : currentUser,
-        "button" : button
+        "button" : button,
+        "numberofFollowers" : numberofFollowers,
+        "numberofFollowing" : numberofFollowing
     })
     
 """Function to POST the 
