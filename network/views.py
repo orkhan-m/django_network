@@ -4,13 +4,20 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage
 
 from .models import User, Post, Likes, Follow
 
 
 def index(request):
+    all_posts = Post.objects.order_by('-timestamp')
+    paginator  = Paginator(all_posts, 9)
+    
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, "network/index.html", {
-        "posts" : Post.objects.order_by('-timestamp')
+        "posts" : page_obj,
     })
 
 @login_required
@@ -23,8 +30,12 @@ def following_page(request):
     # NOTE how to filter by the query set values
     post_of_following = Post.objects.filter(user__in=followed_users).order_by('-timestamp')
 
+    paginator  = Paginator(post_of_following, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, "network/index.html", {
-        "posts" : post_of_following
+        "posts" : page_obj
     })
 
 @login_required
@@ -61,6 +72,11 @@ def individual(request, id):
     # posts of the selected id profile
     posts = Post.objects.filter(user=user_individual).order_by('-timestamp')
 
+    # pagination
+    paginator = Paginator(posts, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     if Follow.objects.filter(user_main=user_individual, user_follower=currentUser).exists():
         button = "Unfollow"
     else:
@@ -70,7 +86,7 @@ def individual(request, id):
     numberofFollowing = Follow.objects.filter(user_follower = user_individual).count()
 
     return render(request, "network/individual.html", {
-        "posts" : posts,
+        "posts" : page_obj,
         "user_individual" : user_individual,
         "currentUser" : currentUser,
         "button" : button,

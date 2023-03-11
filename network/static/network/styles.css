@@ -31,7 +31,7 @@
 .post-content {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around flex-start;
+  justify-content: flex-start;
 }
 
 .individual-post {
@@ -43,7 +43,7 @@
   border: solid 1px gainsboro;
   margin: 1%;
   height: 250px;
-  width: 30%;
+  width: calc(100% / 3 - 2%);
   background-color: #eddbc7;
 }
 
@@ -123,4 +123,9 @@
 
 .follow-btn-unfollow {
   background-color: rgb(197, 41, 41);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
 }
