@@ -1,4 +1,5 @@
 {% extends "network/layout.html" %} {% block body %}
+<p name="salam">Salam Popolam</p>
 <div class="post">
   <form method="post" action="{% url 'post' %}" class="post-form">
     {% csrf_token %}
@@ -31,13 +32,22 @@
       Timestamp: <strong>{{ post.timestamp }}</strong>
     </h6>
     <div class="individual-post-content">
-      <p>{{ post.post }}</p>
+      <p class="post-text" name="post-text-edited">{{ post.post }}</p>
     </div>
     <div class="likes-and-edit">
       <p class="likes">&#9829;</p>
       <p class="like-number">number</p>
       {% if post.user == currentUser%}
       <button class="btn-edit-content">Edit</button>
+      <form
+        method="post"
+        action="{% url 'post_individual' post_id=post.id %}"
+        class="btn-save-edit-form"
+      >
+        {% csrf_token %}
+        <button class="btn-save-edit">Save</button>
+      </form>
+      <button class="btn-cancel-edit">Cancel</button>
       {% endif %}
     </div>
   </div>

@@ -12,6 +12,15 @@ class Post(models.Model):
 
     def __str__(self):
         return f"{self.user} posted: {self.post}"
+    
+    def serialize(self):
+        return {
+            "id" : self.id,
+            # if self.user does not work try: self.user.username
+            "user" : self.user,
+            "post" : self.post,
+            "timestamp" : self.timestamp.strftime("%b %d %Y, %I:%M %p") 
+        }
 
 
 class Likes(models.Model):

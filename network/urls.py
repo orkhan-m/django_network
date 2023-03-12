@@ -11,5 +11,8 @@ urlpatterns = [
     path("post", views.post, name="post"),
     path("individual/<int:id>", views.individual, name="individual"),
     path("follow/<int:id>", views.follow, name="follow"),
-    path("following_page", views.following_page, name="following_page")
+    path("following_page", views.following_page, name="following_page"),
+
+    # API Routes for JS fetch
+    path("post_individual/<int:post_id>", views.post_individual, name="post_individual")
 ]
