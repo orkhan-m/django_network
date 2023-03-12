@@ -3,7 +3,7 @@
   <form method="post" action="{% url 'post' %}" class="post-form">
     {% csrf_token %}
     <textarea
-      maxlength="5000"
+      maxlength="1000"
       class="input-textarea"
       name="input-textarea-name"
     ></textarea>
@@ -33,8 +33,13 @@
     <div class="individual-post-content">
       <p>{{ post.post }}</p>
     </div>
-    <p class="likes">&#9829;</p>
-    <p class="like-number">number</p>
+    <div class="likes-and-edit">
+      <p class="likes">&#9829;</p>
+      <p class="like-number">number</p>
+      {% if post.user == currentUser%}
+      <button class="btn-edit-content">Edit</button>
+      {% endif %}
+    </div>
   </div>
   {% endfor %}
 </div>

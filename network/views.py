@@ -10,6 +10,7 @@ from .models import User, Post, Likes, Follow
 
 
 def index(request):
+    currentUser = request.user
     all_posts = Post.objects.order_by('-timestamp')
     paginator  = Paginator(all_posts, 9)
     
@@ -18,6 +19,7 @@ def index(request):
 
     return render(request, "network/index.html", {
         "posts" : page_obj,
+        "currentUser" : currentUser
     })
 
 @login_required
