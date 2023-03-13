@@ -27,15 +27,11 @@ def index(request):
 
 @login_required
 def post_individual(request, post_id):
-    # if request.method == "POST":
-
-
-    new_post_text = request.POST['post-text-edited']
-    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-    print(new_post_text)
-        # current_post = Post.objects.get(pk=post_id)
-        # current_post.post = new_post_text
-        # current_post.save()
+    if request.method == "POST":
+        new_post_text = request.POST['post-text-edited']   
+        current_post = Post.objects.get(pk=post_id)
+        current_post.post = new_post_text
+        current_post.save()
 
     return HttpResponseRedirect(reverse("index"))
 

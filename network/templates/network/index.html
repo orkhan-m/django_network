@@ -1,5 +1,4 @@
 {% extends "network/layout.html" %} {% block body %}
-<p name="salam">Salam Popolam</p>
 <div class="post">
   <form method="post" action="{% url 'post' %}" class="post-form">
     {% csrf_token %}
@@ -18,38 +17,40 @@
 <div class="post-content">
   {% for post in posts %}
   <div class="individual-post">
-    <h6 class="user-and-time">
-      Posted by:
-      <strong
-        ><a
-          href="{% url 'individual' id=post.user.id %}"
-          id="user-{{ post.user.id }}"
-          >{{ post.user }}</a
-        ></strong
-      >
-    </h6>
-    <h6 class="user-and-time">
-      Timestamp: <strong>{{ post.timestamp }}</strong>
-    </h6>
-    <div class="individual-post-content">
-      <p class="post-text" name="post-text-edited">{{ post.post }}</p>
-    </div>
-    <div class="likes-and-edit">
-      <p class="likes">&#9829;</p>
-      <p class="like-number">number</p>
-      {% if post.user == currentUser%}
-      <button class="btn-edit-content">Edit</button>
-      <form
-        method="post"
-        action="{% url 'post_individual' post_id=post.id %}"
-        class="btn-save-edit-form"
-      >
-        {% csrf_token %}
+    <form
+      method="post"
+      action="{% url 'post_individual' post_id=post.id %}"
+      class="btn-save-edit-form"
+    >
+      {% csrf_token %}
+      <h6 class="user-and-time">
+        Posted by:
+        <strong
+          ><a
+            href="{% url 'individual' id=post.user.id %}"
+            id="user-{{ post.user.id }}"
+            >{{ post.user }}</a
+          ></strong
+        >
+      </h6>
+      <h6 class="user-and-time">
+        Timestamp: <strong>{{ post.timestamp }}</strong>
+      </h6>
+      <div class="individual-post-content">
+        <textarea class="post-text" name="post-text-edited" disabled>
+{{post.post}}</textarea
+        >
+      </div>
+      <div class="likes-and-edit">
+        <p class="likes">&#9829;</p>
+        <p class="like-number">number</p>
+        {% if post.user == currentUser%}
+        <button class="btn-edit-content">Edit</button>
         <button class="btn-save-edit">Save</button>
-      </form>
-      <button class="btn-cancel-edit">Cancel</button>
-      {% endif %}
-    </div>
+        <button class="btn-cancel-edit">Cancel</button>
+        {% endif %}
+      </div>
+    </form>
   </div>
   {% endfor %}
 </div>

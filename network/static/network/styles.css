@@ -47,13 +47,21 @@
   background-color: #eddbc7;
 }
 
+.btn-save-edit-form {
+  display: block;
+  width: 100%;
+  align-self: center;
+  margin-right: 1%;
+  margin-left: auto;
+}
+
 .user-and-time {
   width: 100%;
   background-color: #f8ead8;
   padding-left: 0.5%;
 }
 
-.individual-post-content {
+.individual-post-content .post-text {
   width: 100%;
   flex-grow: 15;
   padding: 1%;
@@ -120,18 +128,12 @@
   background-color: ghostwhite;
 }
 
-.btn-save-edit-form {
-  display: none;
-  align-self: center;
-  margin-right: 1%;
-  margin-left: auto;
-}
-
 .btn-save-edit {
   display: none;
   font-size: 16px;
   align-self: center;
   margin-right: 1%;
+  margin-left: auto;
   width: auto;
   height: auto;
   border-radius: 15px;
@@ -148,8 +150,8 @@
   font-size: 16px;
   align-self: center;
   margin-right: 1%;
-  width: 15%;
-  height: 72%;
+  width: auto;
+  height: auto;
   border-radius: 15px;
   border: 1px solid groove;
   background-color: antiquewhite;
