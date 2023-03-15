@@ -26,7 +26,14 @@ class Post(models.Model):
 class Likes(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE) #, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE) #, null=True, blank=True)
-    like = models.BooleanField(default=False)
+
+    def serialize(self):
+        return {
+            "id" : self.id,
+            # if self.user does not work try: self.user.username
+            "user" : self.user,
+            "post" : self.post,
+        }
 
 class Follow(models.Model):
     user_main = models.ForeignKey(User, on_delete=models.CASCADE, related_name="main") #, null=True, blank=True)
