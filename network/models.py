@@ -19,7 +19,7 @@ class Post(models.Model):
             # if self.user does not work try: self.user.username
             "user" : self.user,
             "post" : self.post,
-            "timestamp" : self.timestamp.strftime("%b %d %Y, %I:%M %p") 
+            "timestamp" : self.timestamp.strftime("%d %b %Y, %I:%M %p") 
         }
 
 
