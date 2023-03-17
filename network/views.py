@@ -16,7 +16,7 @@ def index(request):
     currentUser = request.user
     all_posts = Post.objects.order_by('-timestamp')
 
-    paginator  = Paginator(all_posts, 9)
+    paginator = Paginator(all_posts, 9)
     
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number) 
@@ -33,7 +33,8 @@ def index(request):
     return render(request, "network/index.html", {
         "posts" : page_obj,
         "currentUser" : currentUser,
-        "whatYouLiked" : whatYouLiked
+        "whatYouLiked" : whatYouLiked,
+        "allLikes" : allLikes
     })
 
 @login_required

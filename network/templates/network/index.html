@@ -59,7 +59,7 @@
           &#9829;
         </p>
         {% endif %}
-        <p class="like-number">number</p>
+        <p class="like-number">{{post.post_related_likes.count}}</p>
         {% if post.user == currentUser%}
         <button class="btn-edit-content">Edit</button>
         <button class="btn-save-edit">Save</button>
