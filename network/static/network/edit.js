@@ -40,15 +40,40 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const allLikeBtns = document.querySelectorAll(".likes");
 
-  function like_button() {
-    const postDiv = this.closest(".individual-post");
-    var likes = postDiv.querySelector(".likes");
+  function like_handler(postid, whatYouLiked, likeBtn) {
+    if (whatYouLiked.indexOf(postid) >= 0) {
+      var liked = true;
+    } else {
+      var liked = false;
+    }
 
-    postDiv.querySelector(".likes").style.color = "white";
-    postDiv.querySelector(".likes").style.color = "red";
+    if (liked === true) {
+      fetch(`/toggle_like/${postid}`)
+        .then((response) => response.json)
+        .then((result) => {
+          console.log(result);
+          likeBtn.classList.remove("likes-liked");
+          likeBtn.classList.add("likes-unliked");
+        });
+    } else {
+      fetch(`/toggle_like/${postid}`)
+        .then((response) => response.json)
+        .then((result) => {
+          console.log(result);
+          likeBtn.classList.remove("likes-unliked");
+          likeBtn.classList.add("likes-liked");
+        });
+    }
+
+    console.log(postid);
+    console.log(whatYouLiked);
   }
 
   allLikeBtns.forEach((likeBtn) => {
-    likeBtn.addEventListener("click", like_button);
+    const postid = likeBtn.getAttribute("data-postid");
+    const whatYouLiked = likeBtn.getAttribute("data-whatYouLiked");
+    likeBtn.addEventListener("click", () =>
+      like_handler(postid, whatYouLiked, likeBtn)
+    );
   });
 });

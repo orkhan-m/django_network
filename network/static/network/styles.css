@@ -76,7 +76,16 @@
   height: 40px;
 }
 
-.likes {
+.likes-liked {
+  align-self: flex-start;
+  color: red;
+  font-size: 26px;
+  margin-bottom: 1%;
+  margin-top: 0.5%;
+  padding-left: 2%;
+}
+
+.likes-unliked {
   align-self: flex-start;
   color: white;
   font-size: 26px;
@@ -85,7 +94,7 @@
   padding-left: 2%;
 }
 
-@keyframes example {
+@keyframes like-heart {
   0% {
     transform: rotate(30deg);
   }
@@ -97,8 +106,13 @@
   }
 }
 
-.likes:hover {
-  animation-name: example;
+.likes-liked:hover {
+  animation-name: like-heart;
+  animation-duration: 1s;
+}
+
+.likes-unliked:hover {
+  animation-name: like-heart;
   animation-duration: 1s;
 }
 

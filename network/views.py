@@ -15,15 +15,39 @@ from .models import User, Post, Likes, Follow
 def index(request):
     currentUser = request.user
     all_posts = Post.objects.order_by('-timestamp')
+
     paginator  = Paginator(all_posts, 9)
     
     page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginator.get_page(page_number) 
+
+    allLikes = Likes.objects.all()
+
+    whatYouLiked = []
+    try:
+        for like in allLikes:
+            whatYouLiked.append(like.post.id)
+    except:
+        whatYouLiked = []
 
     return render(request, "network/index.html", {
         "posts" : page_obj,
-        "currentUser" : currentUser
+        "currentUser" : currentUser,
+        "whatYouLiked" : whatYouLiked
     })
+
+@login_required
+def toggle_like(request, post_id):
+    post = Post.objects.get(pk=post_id)
+    currentUser = request.user
+    if Likes.objects.filter(user=currentUser, post=post).exists():
+        to_delete = Likes.objects.filter(user=currentUser, post=post)
+        to_delete.delete()
+    elif not Likes.objects.filter(user=currentUser, post=post).exists():
+        new_like = Likes(post=post, user=currentUser)
+        new_like.save()
+
+    return JsonResponse({"message":"Like added!"})
 
 @login_required
 def post_individual(request, post_id):

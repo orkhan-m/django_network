@@ -29,7 +29,7 @@
           ><a
             href="{% url 'individual' id=post.user.id %}"
             id="user-{{ post.user.id }}"
-            >{{ post.user }}</a
+            >@{{ post.user }}</a
           ></strong
         >
       </h6>
@@ -42,7 +42,23 @@
         >
       </div>
       <div class="likes-and-edit">
-        <p class="likes">&#9829;</p>
+        {% if post.id in whatYouLiked %}
+        <p
+          class="likes likes-liked"
+          data-postid="{{post.id}}"
+          data-whatYouLiked="{{whatYouLiked}}"
+        >
+          &#9829;
+        </p>
+        {% else %}
+        <p
+          class="likes likes-unliked"
+          data-postid="{{post.id}}"
+          data-whatYouLiked="{{whatYouLiked}}"
+        >
+          &#9829;
+        </p>
+        {% endif %}
         <p class="like-number">number</p>
         {% if post.user == currentUser%}
         <button class="btn-edit-content">Edit</button>
