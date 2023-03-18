@@ -47,7 +47,6 @@ def toggle_like(request, post_id):
     elif not Likes.objects.filter(user=currentUser, post=post).exists():
         new_like = Likes(post=post, user=currentUser)
         new_like.save()
-
     return JsonResponse({"message":"Like added!"})
 
 @login_required
