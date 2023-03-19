@@ -15,6 +15,7 @@ from .models import User, Post, Likes, Follow
 def index(request):
     # get current user name
     currentUser = request.user
+
     # get all the posts in a reverse order by time
     all_posts = Post.objects.order_by('-timestamp')
     # show 9 posts per page
@@ -25,7 +26,11 @@ def index(request):
     # get all likes for the total number of likes in HTML
     allLikes = Likes.objects.all()
     # get current user's likes
-    myLikesModel = Likes.objects.filter(user=currentUser)
+    # TRY - EXCEPT to ensure page load when no user is signed in
+    try:
+        myLikesModel = Likes.objects.filter(user=currentUser)
+    except:
+        myLikesModel = ""
     # convert myLikes to a list 
     # when passed to HTML → and JS later automatically get converted to string - handled in JS by converting to array
     myLikes = []
