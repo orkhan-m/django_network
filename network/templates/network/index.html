@@ -32,6 +32,7 @@
             >@{{ post.user }}</a
           ></strong
         >
+        (ID: {{post.id}})
       </h6>
       <h6 class="user-and-time">
         Timestamp: <strong>{{ post.timestamp }}</strong>
@@ -42,11 +43,11 @@
         >
       </div>
       <div class="likes-and-edit">
-        {% if post.id in whatYouLiked %}
+        {% if post.id in myLikes %}
         <p
           class="likes likes-liked"
           data-postid="{{post.id}}"
-          data-whatYouLiked="{{whatYouLiked}}"
+          data-myLikes="{{myLikes}}"
         >
           &#9829;
         </p>
@@ -54,13 +55,13 @@
         <p
           class="likes likes-unliked"
           data-postid="{{post.id}}"
-          data-whatYouLiked="{{whatYouLiked}}"
+          data-myLikes="{{myLikes}}"
         >
           &#9829;
         </p>
         {% endif %}
-        <p class="like-number">
-          {{post.post_related_likes.count}} + {{ post.id }}
+        <p class="like-number like-number-{{post.id}}">
+          {{post.post_related_likes.count}}
         </p>
         {% if post.user == currentUser%}
         <button class="btn-edit-content">Edit</button>

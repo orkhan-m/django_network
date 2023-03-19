@@ -107,11 +107,13 @@
 }
 
 .likes-liked:hover {
+  cursor: pointer;
   animation-name: like-heart;
   animation-duration: 1s;
 }
 
 .likes-unliked:hover {
+  cursor: pointer;
   animation-name: like-heart;
   animation-duration: 1s;
 }

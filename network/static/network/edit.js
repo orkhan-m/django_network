@@ -39,84 +39,68 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   const allLikeBtns = document.querySelectorAll(".likes");
-  // CODE
-  const whatYouLikedString = document
-    .querySelector(".likes")
-    .getAttribute("data-whatYouLiked");
-  whatYouLiked = JSON.parse(whatYouLikedString);
-  console.log("first defined: " + whatYouLiked);
-  const allLikeNumbers = document.querySelectorAll(".like-number");
 
-  function like_handler(postid, whatYouLiked, likeBtn) {
-    if (whatYouLiked.indexOf(postid) >= 0) {
-      console.log("like_handler id - disliked: " + postid);
-      console.log(typeof whatYouLiked);
-      console.log("like_handler wyl - disliked: " + whatYouLiked);
+  const MyLikesString = document
+    .querySelector(".likes")
+    .getAttribute("data-myLikes");
+  const myLikesArray = JSON.parse(MyLikesString);
+  const myLikes = Array.from(new Set(myLikesArray));
+
+  function like_handler(postid, likeBtn, myLikes) {
+    if (myLikes.includes(Number(postid))) {
       var liked = true;
     } else {
-      console.log("like_handler id - liked: " + postid);
-      console.log(typeof whatYouLiked);
-      console.log("like_handler wyl - liked: " + whatYouLiked);
       var liked = false;
     }
 
-    // if (liked === true) {
-    //   // Get the likes count element CODE
-    //   const likeNumber = document.querySelector(".like-number");
-    //   console.log("Element when like removed :" + likeNumber);
-    //   // Get the current likes count (convert to Integer)
-    //   let likesNumberInt = parseInt(likeNumber.innerHTML);
-    //   // decrease by one since like is removed
-    //   likesNumberInt--;
-    //   // replace value
-    //   likeNumber.innerText = likesNumberInt;
-    // } else if (liked === false) {
-    //   // Get the likes count element CODE
-    //   const likeNumber = document.querySelector(".like-number");
-    //   // Get the current likes count (convert to Integer)
-    //   let likesNumberInt = parseInt(likeNumber.innerHTML);
-    //   // decrease by one since like is removed
-    //   likesNumberInt++;
-    //   // replace value
-    //   likeNumber.innerText = likesNumberInt;
-    // }
-
     if (liked === true) {
+      // TOSTUDY - fetch
       fetch(`/toggle_like/${postid}`)
         .then((response) => response.json)
         .then((result) => {
           console.log(result);
           likeBtn.classList.remove("likes-liked");
           likeBtn.classList.add("likes-unliked");
-          // Convert whatYouLiked to array
-          // const whatYouLikedArray = whatYouLiked.split(",");
-          // Update whatYouLiked variable
-          whatYouLiked.splice(whatYouLiked.indexOf(postid), 1);
-          console.log("update in toggle: " + whatYouLiked);
+          // Update myLikes variable
+          myLikes.splice(myLikes.indexOf(Number(postid)), 1);
+          // NOTE change the number of likes with JS
+          // get the number
+          const likeNumber = document.querySelector(`.like-number-${postid}`);
+          // Get the current likes count (convert to Integer)
+          let likesNumberInt = parseInt(likeNumber.innerHTML);
+          // decrease by one since like is removed
+          likesNumberInt--;
+          // replace value
+          likeNumber.innerText = likesNumberInt;
         });
     } else if (liked === false) {
-      console.log("aaaaaaaaaa" + typeof whatYouLiked);
       fetch(`/toggle_like/${postid}`)
         .then((response) => response.json)
         .then((result) => {
           console.log(result);
           likeBtn.classList.remove("likes-unliked");
           likeBtn.classList.add("likes-liked");
-          // Convert whatYouLiked to array
-          // const whatYouLikedArray = whatYouLiked.split(",");
-          // Update whatYouLiked variable
-          whatYouLiked.push(postid);
-          console.log("update in toggle: " + whatYouLiked);
+          // Update myLikes variable
+          if (!myLikes.includes(Number(postid))) {
+            myLikes.push(Number(postid));
+          }
+          // NOTE change the number of likes with JS
+          // get the number
+          const likeNumber = document.querySelector(`.like-number-${postid}`);
+          // Get the current likes count (convert to Integer)
+          let likesNumberInt = parseInt(likeNumber.innerHTML);
+          // decrease by one since like is removed
+          likesNumberInt++;
+          // replace value
+          likeNumber.innerText = likesNumberInt;
         });
     }
   }
 
   allLikeBtns.forEach((likeBtn) => {
     const postid = likeBtn.getAttribute("data-postid");
-    console.log("run for loop: " + whatYouLiked);
-    // const whatYouLiked = likeBtn.getAttribute("data-whatYouLiked");
     likeBtn.addEventListener("click", () =>
-      like_handler(postid, whatYouLiked, likeBtn)
+      like_handler(postid, likeBtn, myLikes)
     );
   });
 });
